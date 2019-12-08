@@ -145,13 +145,14 @@ def buildSensationalCol(f_news):
         similar_doc = model.docvecs.most_similar([v1])
         sensationCol.append(similar_doc[0][0])
     sensationCol=list(map(int, sensationCol))
-    f_news['sensationCol']=sensationCol 
+    f_news['sensationCol']=sensationCol
     return f_news
         
 class sensational:
     def __init__(self, fnews):
         self.f_news = processFakeNews(fnews)
-        self.x_test = buildSensationalCol(self.f_news)
+        self.xtest = buildSensationalCol(self.f_news)
+        self.x_test = self.xtest[self.xtest.columns[15:22]] 
         self.y_test = self.x_test['Label'].map({'false':0,'true': 1,'barely-true':0,'half-true':1,'mostly-true':1,'pants-fire':0})
     def predict(self):
         return prediction(self.x_test, self.y_test)
