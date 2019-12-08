@@ -100,11 +100,15 @@ def sensphrasedetect(str):
             sum+=1
     return sum
 
-def prediction(xtest, ytest):
+def prediction(xtest):
     pickleModel = "/content/gdrive/My Drive/Drifters/Models/sensational_Model.pkl"
     pickle_in = open(pickleModel, "rb")
     loadData = pickle.load(pickle_in)
-    return np.mean(loadData.predict(xtest) == ytest)
+    dataset = loadData.predict(xtest) 
+    for i in dataset:
+        if(i==0):
+            return 0
+    return 1
 
 def processFakeNews(fnews):
     count = lambda l1,l2: sum([1 for x in l1 if x in l2])
@@ -114,39 +118,38 @@ def processFakeNews(fnews):
     lenCount=[]
     profanCount=[]
     sensphrCount=[]
-    for x in fnews['Statement']:
-       pcCount.append(sum(1 for c in x if c=="!" or c=="?"))
-       capCount.append(sum(1 for c in x if c.isupper()))
-       digCount.append(sum(1 for c in x if c.isdigit()))
-       lenCount.append(len(x))
-       sensphrCount.append(sensphrasedetect(x))
+    f_news=[]
+    pcCount.append(sum(1 for c in fnews if c=="!" or c=="?"))
+    capCount.append(sum(1 for c in fnews if c.isupper()))
+    digCount.append(sum(1 for c in fnews if c.isdigit()))
+    lenCount.append(len(x))
+    sensphrCount.append(sensphrasedetect(fnews))
 #    for x in test_reviewed_docs:
 #       try:
 #          profanCount.append(float(len([w for w in x if w.lower() in PROFANITY]))/len(x))
 #       except:
 #          profanCount.append(0)
 
-    fnews['puncCount']=pcCount
-    fnews['capCount']=capCount
-    fnews['digCount']=digCount
-    fnews['lenCount']=lenCount
+    f_news['puncCount']=pcCount
+    f_news['capCount']=capCount
+    f_news['digCount']=digCount
+    f_news['lenCount']=lenCount
 #    fnews['profanCount']=profanCount
-    fnews['profanCount']=0
-    fnews['sensPhrCount']=sensphrCount
-    return fnews 
+    f_news['profanCount']=0
+    f_news['sensPhrCount']=sensphrCount
+    return f_news 
 
 def newDataset(xtest):
     return xtest
 
-def buildSensationalCol(f_news):
+def buildSensationalCol(fnews,f_news):
     savedModel = "/content/gdrive/My Drive/Drifters/Models/sensationalism.model"
     sensationCol=[]
     model= Doc2Vec.load(savedModel)
-    for row in f_news['Statement']:
-        test_data = word_tokenize(row.lower())
-        v1 = model.infer_vector(test_data)
-        similar_doc = model.docvecs.most_similar([v1])
-        sensationCol.append(similar_doc[0][0])
+    test_data = word_tokenize(fnews.lower())
+    v1 = model.infer_vector(test_data)
+    similar_doc = model.docvecs.most_similar([v1])
+    sensationCol.append(similar_doc[0][0])
     sensationCol=list(map(int, sensationCol))
     f_news['sensationCol']=sensationCol
     return f_news
@@ -154,10 +157,9 @@ def buildSensationalCol(f_news):
 class sensational:
     def __init__(self, fnews):
         self.f_news = processFakeNews(fnews)
-        self.xtest = buildSensationalCol(self.f_news)
-        self.x_test = self.xtest[self.xtest.columns[14:22]] 
-        self.y_test = self.f_news['Label'].map({'false':0,'true': 1,'barely-true':0,'half-true':1,'mostly-true':1,'pants-fire':0})
+        self.xtest = buildSensationalCol(fnews,self.f_news)
+        self.x_test = self.xtest 
     def predict(self):
-        return prediction(self.x_test, self.y_test)
+        return prediction(self.x_test)
     def checkNewDataset(self):
         return  newDataset(self.x_test)
