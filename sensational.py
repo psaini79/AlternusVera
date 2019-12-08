@@ -143,8 +143,8 @@ def buildSensationalCol(f_news):
         similar_doc = model.docvecs.most_similar([v1])
         sensationCol.append(similar_doc[0][0])
     sensationCol=list(map(int, sensationCol))
-    f_news['sensationCol']=1
-    f_news
+    f_news['sensationCol']=sensationCol 
+    rteurn f_news
         
 class sensational:
     def __init__(self, fnews):
