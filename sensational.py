@@ -144,7 +144,7 @@ def buildSensationalCol(f_news):
         sensationCol.append(similar_doc[0][0])
     sensationCol=list(map(int, sensationCol))
     f_news['sensationCol']=sensationCol 
-    rteurn f_news
+    return f_news
         
 class sensational:
     def __init__(self, fnews):
