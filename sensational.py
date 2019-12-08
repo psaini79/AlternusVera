@@ -4,6 +4,8 @@ import warnings
 import pickle
 import string
 import random
+import nltk
+nltk.download('punkt')
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 from nltk.tokenize import word_tokenize
 
