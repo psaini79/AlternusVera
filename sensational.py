@@ -151,14 +151,14 @@ def newDataset(xtest):
 
 def buildSensationalCol(fnews,f_news):
     savedModel = "/content/gdrive/My Drive/Drifters/Models/sensationalism.model"
-   # sensationCol=[]
+    sensationCol=[]
     model= Doc2Vec.load(savedModel)
     test_data = word_tokenize(fnews.lower())
     v1 = model.infer_vector(test_data)
     similar_doc = model.docvecs.most_similar([v1])
     sensationCol.append(similar_doc[0][0])
     sensationCol=list(map(int, sensationCol))
-    f_news['sensationCol']=1
+    f_news['sensationCol']=sensationCol
     return f_news
         
 class sensational:
