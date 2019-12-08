@@ -159,5 +159,5 @@ class sensational:
         self.y_test = self.f_news['Label'].map({'false':0,'true': 1,'barely-true':0,'half-true':1,'mostly-true':1,'pants-fire':0})
     def predict(self):
         return prediction(self.x_test, self.y_test)
-    def checkNewDataset(self.x_test):
-        return  newDataset(xtest)
+    def ceeckNewDataset(self):
+        return  newDataset(self.x_test)
