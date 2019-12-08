@@ -135,6 +135,9 @@ def processFakeNews(fnews):
     fnews['sensPhrCount']=sensphrCount
     return fnews 
 
+def newDataset(xtest):
+    return xtest
+
 def buildSensationalCol(f_news):
     savedModel = "/content/gdrive/My Drive/Drifters/Models/sensationalism.model"
     sensationCol=[]
@@ -156,3 +159,5 @@ class sensational:
         self.y_test = self.f_news['Label'].map({'false':0,'true': 1,'barely-true':0,'half-true':1,'mostly-true':1,'pants-fire':0})
     def predict(self):
         return prediction(self.x_test, self.y_test)
+    def checkNewDataset(self.x_test):
+        return  newDataset(xtest)
