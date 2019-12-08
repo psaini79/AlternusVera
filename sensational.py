@@ -104,8 +104,6 @@ def prediction(xtest, ytest):
     loadData = pickle.load(pickle_in)
     return np.mean(loadData.predict(xtest) == ytest)
 
-
-
 def processFakeNews(fnews):
     count = lambda l1,l2: sum([1 for x in l1 if x in l2])
     pcCount=[]
@@ -133,13 +131,13 @@ def processFakeNews(fnews):
 #    fnews['profanCount']=profanCount
     fnews['profanCount']=0
     fnews['sensPhrCount']=sensphrCount
-    fnews 
+    return fnews 
 
 def buildSensationalCol(f_news):
     savedModel = "/content/gdrive/My Drive/Drifters/Models/sensationalism.model"
     sensationCol=[]
     model= Doc2Vec.load(savedModel)
-    for row in f_news['Statement']:
+    for row in fnews['Statement']:
         test_data = word_tokenize(row.lower())
         v1 = model.infer_vector(test_data)
         similar_doc = model.docvecs.most_similar([v1])
