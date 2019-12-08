@@ -122,7 +122,7 @@ def processFakeNews(fnews):
     pcCount.append(sum(1 for c in fnews if c=="!" or c=="?"))
     capCount.append(sum(1 for c in fnews if c.isupper()))
     digCount.append(sum(1 for c in fnews if c.isdigit()))
-    lenCount.append(len(x))
+    lenCount.append(len(fnews))
     sensphrCount.append(sensphrasedetect(fnews))
 #    for x in test_reviewed_docs:
 #       try:
