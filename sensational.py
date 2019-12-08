@@ -131,7 +131,7 @@ def processFakeNews(fnews):
 #          profanCount.append(0)
 
     data = {'puncCount': pcCount, 
-        'capCount': capCount
+        'capCount': capCount,
         'digCount': digCount,
         'lenCount': lenCount,
         'profanCount': profanCount,
