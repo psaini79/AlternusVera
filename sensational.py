@@ -137,7 +137,7 @@ def buildSensationalCol(f_news):
     savedModel = "/content/gdrive/My Drive/Drifters/Models/sensationalism.model"
     sensationCol=[]
     model= Doc2Vec.load(savedModel)
-    for row in fnews['Statement']:
+    for row in f_news['Statement']:
         test_data = word_tokenize(row.lower())
         v1 = model.infer_vector(test_data)
         similar_doc = model.docvecs.most_similar([v1])
