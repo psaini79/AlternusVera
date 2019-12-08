@@ -130,13 +130,20 @@ def processFakeNews(fnews):
 #       except:
 #          profanCount.append(0)
 
-    f_news['puncCount']=pcCount
-    f_news['capCount']=capCount
-    f_news['digCount']=digCount
-    f_news['lenCount']=lenCount
+    data = {'puncCount': pcCount, 
+        'capCount': capCount
+        'digCount': digCount,
+        'lenCount': lenCount,
+        'profanCount': profanCount,
+        'sensphrCount': sensphrCount}
+    f_news = pd.DataFrame(data)  
+#    f_news['puncCount']=pcCount
+#    f_news['capCount']=capCount
+#    f_news['digCount']=digCount
+#    f_news['lenCount']=lenCount
 #    fnews['profanCount']=profanCount
-    f_news['profanCount']=0
-    f_news['sensPhrCount']=sensphrCount
+#    f_news['profanCount']=0
+#    f_news['sensPhrCount']=sensphrCount
     return f_news 
 
 def newDataset(xtest):
@@ -144,7 +151,7 @@ def newDataset(xtest):
 
 def buildSensationalCol(fnews,f_news):
     savedModel = "/content/gdrive/My Drive/Drifters/Models/sensationalism.model"
-    sensationCol=[]
+   # sensationCol=[]
     model= Doc2Vec.load(savedModel)
     test_data = word_tokenize(fnews.lower())
     v1 = model.infer_vector(test_data)
