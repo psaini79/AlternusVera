@@ -141,7 +141,7 @@ def processFakeNews(fnews):
     f_news['capCount']=capCount
     f_news['digCount']=digCount
     f_news['lenCount']=lenCount
-    fnews['profanCount']=profanCount
+    f_news['profanCount']=profanCount
     f_news['profanCount']=0
     f_news['sensPhrCount']=sensphrCount
     return f_news 
